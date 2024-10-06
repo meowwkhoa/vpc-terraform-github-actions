@@ -14,6 +14,7 @@ module "security_groups" {
   source     = "./modules/security_groups"
   vpc_id     = module.vpc.vpc_id
   allowed_ip = "192.168.1.1"
+  public_security_group_id = aws_security_group.public.id
 }
 
 module "ec2" {
