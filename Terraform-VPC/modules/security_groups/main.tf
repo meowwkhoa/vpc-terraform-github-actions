@@ -5,7 +5,7 @@ resource "aws_security_group" "public" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.allowed_ip] # Replace with the appropriate allowed IP CIDR
+    cidr_blocks = [var.allowed_ip]
   }
 
   egress {
@@ -27,7 +27,7 @@ resource "aws_security_group" "private" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = [aws_security_group.public.id]  # Reference the public security group directly
+    security_groups = [aws_security_group.public.id]
   }
 
   egress {
