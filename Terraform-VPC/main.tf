@@ -23,6 +23,6 @@ module "ec2" {
   instance_type = "t2.micro"
   public_subnet_id = module.vpc.public_subnet_id
   private_subnet_id = module.vpc.private_subnet_id
-  public_security_group = module.security_groups.public.id
-  private_security_group = module.security_groups.private.id
+  public_security_group = module.security_groups.public_security_group_id
+  private_security_group = module.security_groups.private_security_group_id
 }
