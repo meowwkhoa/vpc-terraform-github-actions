@@ -32,13 +32,19 @@ jobs:
         terraform_version: 1.0.0
 
     - name: Initialize Terraform
-      run: terraform init
+      run: |
+        cd Terraform-VPC
+        terraform init
 
     - name: Plan Terraform changes
-      run: terraform plan -out=tfplan
+      run: |
+        cd Terraform-VPC
+        terraform plan -out=tfplan
 
     - name: Apply Terraform changes
-      run: terraform apply --auto-approve
+      run: |
+        cd Terraform-VPC
+        terraform apply --auto-approve
 
     - name: Clean up
       run: rm tfplan
