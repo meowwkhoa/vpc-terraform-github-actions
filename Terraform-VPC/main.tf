@@ -14,7 +14,7 @@ module "vpc" {
 module "security_groups" {
   source                  = "./modules/security_groups"
   vpc_id                  = module.vpc.vpc_id
-  allowed_ip              = 192.168.1.1
+  allowed_ip              = "192.168.1.1"
   public_security_group_id = "sg-12345678" # Replace with the actual security group ID
 }
 
