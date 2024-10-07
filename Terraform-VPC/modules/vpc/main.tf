@@ -28,6 +28,7 @@ resource "aws_nat_gateway" "this" {
   subnet_id = aws_subnet.public.id
 }
 
+
 resource "aws_eip" "nat" {
   domain = "vpc"
 }
