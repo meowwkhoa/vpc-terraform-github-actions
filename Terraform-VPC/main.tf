@@ -27,3 +27,4 @@ module "ec2" {
   public_security_group = module.security_groups.public_security_group_id
   private_security_group = module.security_groups.private_security_group_id
 }
+
