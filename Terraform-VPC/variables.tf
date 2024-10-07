@@ -26,7 +26,7 @@ variable "private_subnet_cidr" {
 variable "ami" {
   description = "AMI ID for the EC2 instances"
   type        = string
-  default     = "ami-04b3c39a8a1c62b76"
+  default     = "ami-08c40ec9ead489470"
 }
 
 variable "instance_type" {
