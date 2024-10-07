@@ -45,3 +45,5 @@ jobs:
         terraform apply --auto-approve
 
     - name: Clean up
+      run: rm Terraform-VPC/tfplan
+      
