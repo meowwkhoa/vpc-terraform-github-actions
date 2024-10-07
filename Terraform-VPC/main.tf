@@ -18,6 +18,7 @@ module "security_groups" {
   public_security_group_id = "sg-12345678" # Replace with the actual security group ID
 }
 
+
 module "ec2" {
   source                = "./modules/ec2"
   ami                   = "ami-12345678"
