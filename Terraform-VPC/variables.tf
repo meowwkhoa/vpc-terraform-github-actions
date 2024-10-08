@@ -4,6 +4,12 @@ variable "region" {
   default     = "us-east-1"
 }
 
+variable "az" {
+  description = "Availability Zone"
+  type        = string
+  default     = "us-east-1a"
+}
+
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   type        = string
@@ -38,5 +44,5 @@ variable "instance_type" {
 variable "allowed_ip" {
   description = "IP address allowed to SSH into Public EC2 instance"
   type        = string
-  default     = "0.0.0.0/0"
+  default     = "192.168.1.1/32"
 }

@@ -16,7 +16,7 @@ resource "aws_security_group" "public" {
   }
 
   tags = {
-    Name = "Public Security Group"
+    Name = "Group 12: Public Security Group"
   }
 }
 
@@ -38,6 +38,6 @@ resource "aws_security_group" "private" {
   }
 
   tags = {
-    Name = "Private Security Group"
+    Name = "Group 12: Private Security Group"
   }
 }
