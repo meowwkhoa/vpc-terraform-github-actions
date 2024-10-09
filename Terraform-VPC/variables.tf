@@ -16,6 +16,7 @@ variable "public_subnet_cidr" {
   default     = "10.0.1.0/24"
 }
 
+
 variable "private_subnet_cidr" {
   description = "CIDR block for the Private Subnet"
   type        = string
@@ -25,7 +26,7 @@ variable "private_subnet_cidr" {
 variable "ami" {
   description = "AMI ID for the EC2 instances"
   type        = string
-  default     = "ami-12345678"
+  default     = "ami-08c40ec9ead489470"
 }
 
 variable "instance_type" {
@@ -37,5 +38,5 @@ variable "instance_type" {
 variable "allowed_ip" {
   description = "IP address allowed to SSH into Public EC2 instance"
   type        = string
-  default     = "your_ip_address"
+  default     = "0.0.0.0/0"
 }
