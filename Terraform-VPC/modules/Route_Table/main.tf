@@ -1,5 +1,9 @@
 resource "aws_route_table" "public_route_table" {
   vpc_id = var.vpc_id
+
+  tags = {
+    Name = "Public Route Table group 12"
+  }
 }
 
 resource "aws_route" "public_internet_access" {
@@ -15,6 +19,10 @@ resource "aws_route_table_association" "public_association" {
 
 resource "aws_route_table" "private_route_table" {
   vpc_id = var.vpc_id
+
+  tags = {
+    Name = "Private Route Table group 12"
+  }
 }
 
 resource "aws_route" "private_nat_gateway" {
