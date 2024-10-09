@@ -19,7 +19,7 @@ module "nat" {
 module "route_table" {
   source                  = "./modules/Route_Table"
   vpc_id                  = module.vpc.vpc_id
-  gateway_id              = module.vpc.gateway_id
+  gateway_id              = module.vpc.internet_gateway_id
   public_subnet_id        = module.vpc.public_subnet_id
   nat_gateway_id          = module.nat.nat_gateway_id
   private_subnet_id       = module.vpc.private_subnet_id  
