@@ -5,7 +5,7 @@ resource "aws_instance" "public" {
   security_groups = [var.public_security_group]
 
   tags = {
-    Name = "PublicInstance"
+    Name = "Public Instance group 12"
   }
 }
 
@@ -16,7 +16,7 @@ resource "aws_instance" "private" {
   security_groups = [var.private_security_group]
 
   tags = {
-    Name = "PrivateInstance"
+    Name = "Private Instance group 12"
   }
 }
 
