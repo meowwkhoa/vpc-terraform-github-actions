@@ -45,7 +45,8 @@ Creating a VPC using Terraform as IAAC and GitHub Actions as CI/CD for the NT548
      - `AWS_ACCESS_KEY_ID`
      - `AWS_SECRET_ACCESS_KEY`
      - `AWS_REGION` (e.g., `us-east-1`)
-   ![Access_key_pasting](assets/Access_key.png)
+
+      ![Access_key_pasting](assets/Access_key.png)
 
 ## Usage:
 1. **Clone the Repository:**
@@ -107,8 +108,8 @@ vpc-terraform-github-actions
   ├── main.tf
   ├── outputs.tf
   ├── variables.tf
-  ├── assets               /* Images */
-  └── README.md            /* Readme file with instructions */
+  ├── assets                                      /* Images */
+  └── README.md                                   /* Readme file with instructions */
 
 
 ```
