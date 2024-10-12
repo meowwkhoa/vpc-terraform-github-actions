@@ -114,6 +114,8 @@ vpc-terraform-github-actions
 
 5. **Monitor Deployment:**
    - The GitHub Action will trigger automatically.
+   - Logs of the GitHub Action automatic deployment.
+   ![Logs](assets/Logs.png)
    - Monitor the infrastructure changes in the AWS Management Console.
    
    - Our infrastructure ``VPC group 12``.
