@@ -49,6 +49,7 @@ Creating a VPC using Terraform as IAAC and GitHub Actions as CI/CD for the NT548
 
       ![Access_key_pasting](assets/Access_key.png)
 
+
 ## Usage:
 1. **Clone the Repository:**
    ```bash
