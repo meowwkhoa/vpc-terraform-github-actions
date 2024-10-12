@@ -23,7 +23,7 @@ Creating a VPC using Terraform as IAAC and GitHub Actions as CI/CD for the NT548
    ![Users_name](assets/User_name.png)
    - Attach the necessary policies.
    ![Permission](assets/Permission.png)
-   - Now we can see our user on the AWS platform.
+   - Now we can see our user on the AWS platform.  
    ![All_users](assets/All_users.png)
    - Click on our user, then ``Security credentials``.
    ![Credentials](assets/Credential.png)
@@ -35,6 +35,7 @@ Creating a VPC using Terraform as IAAC and GitHub Actions as CI/CD for the NT548
    ![Create_key](assets/Create_key.png)
    - Now, we can either download the CSV file to save the keys or copy them directly.
    ![CSV](assets/CSV.png)
+
 
 2. **Configure GitHub Secrets:**
    - Go to the repository settings on GitHub.
