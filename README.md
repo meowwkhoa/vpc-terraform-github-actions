@@ -4,10 +4,10 @@
 <!-- code_chunk_output -->
 
 * Contents:
-    * Introduction
+    * [Introduction](#introduction)
     * [Repository Structure](#repository-structure)
     * [Setup Instructions](#setup-instructions)
-    * Usage
+    * [Usage](#usage)
 <!-- /code_chunk_output -->
 
 
@@ -136,7 +136,7 @@ vpc-terraform-github-actions
    - Elastic IP `Group-12-NAT-EIP`.
    ![EIP](assets/Elastic_IP.png)
 
-   - Public Instance `Public Instance group 12` and Private Instance `Public Instance group 12`.
+   - Public Instance `Public Instance group 12` and Private Instance `Private Instance group 12`.
    ![instances](assets/Instances.png)
 
    - Public Security Group `Group 12: Public Security Group` and Private Security Group `Group 12: Private Security Group`.
