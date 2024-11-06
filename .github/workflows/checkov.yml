@@ -1,0 +1,31 @@
+name: Checkov
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  terraform-check:
+    if: github.event.pull_request.merged == true
+    runs-on: Ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install checkov
+        run: |
+         pip install checkov
+      
+      - name: Run checkov
+        working-directory: Terraform-VPC
+        run: |
+         checkov -d .
+      
+      - name: Terraform Validate
+        working-directory: Terraform-VPC
+        run: |
+          terraform validate -no-color
+    
