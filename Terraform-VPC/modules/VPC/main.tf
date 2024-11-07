@@ -21,7 +21,7 @@ resource "aws_internet_gateway" "internet_gateway" {
 resource "aws_subnet" "public_subnet" {
   vpc_id = aws_vpc.main_vpc.id
   cidr_block = var.public_subnet_cidr
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = false
   availability_zone = var.az
 
   tags = {
@@ -58,6 +58,19 @@ resource "aws_default_security_group" "default_security_group" {
   }
 }
 
+resource "aws_network_interface" "public" {
+  subnet_id = aws_subnet.public_subnet.id
+  security_groups = [aws_security_group.public.id]
+}
 
+resource "aws_network_interface" "private" {
+  subnet_id = aws_subnet.private_subnet.id
+  security_groups = [aws_security_group.private.id]
+}
 
-
+resource "aws_flow_log" "vpc_flow_log" {
+  iam_role_arn = "arn"
+  log_destination = "log"
+  traffic_type = "ALL"
+  vpc_id = aws_vpc.main_vpc.id
+}
