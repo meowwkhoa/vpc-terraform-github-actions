@@ -44,7 +44,7 @@ resource "aws_default_security_group" "default_security_group" {
   vpc_id = aws_vpc.main_vpc.id
 
   ingress {
-    protocol  = -1
+    protocol  = "-1"
     self      = true
     from_port = 0
     to_port   = 0
@@ -89,6 +89,7 @@ resource "aws_flow_log" "vpc_flow_log" {
 
 resource "aws_cloudwatch_log_group" "vpc_flow_log" {
   name = "vpc_flow_log"
+  retention_in_days = 7
 }
 
 data "aws_iam_policy_document" "assume_role" {
@@ -116,7 +117,6 @@ data "aws_iam_policy_document" "policy" {
     actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
-      "logs:PutLogEvents",
       "logs:DescribeLogGroups",
       "logs:DescribeLogStreams",
     ]
