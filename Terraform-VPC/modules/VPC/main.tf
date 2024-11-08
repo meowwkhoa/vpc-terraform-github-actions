@@ -72,12 +72,12 @@ module "private" {
 
 resource "aws_network_interface" "public" {
   subnet_id = aws_subnet.public_subnet.id
-  security_groups = [aws_security_group.public.id]
+  security_groups = [module.public.public_security_group_id]
 }
 
 resource "aws_network_interface" "private" {
   subnet_id = aws_subnet.private_subnet.id
-  security_groups = [aws_security_group.private.id]
+  security_groups = [module.private.private_security_group_id]
 }
 
 resource "aws_flow_log" "vpc_flow_log" {
