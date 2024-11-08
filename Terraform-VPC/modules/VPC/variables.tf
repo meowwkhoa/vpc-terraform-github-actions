@@ -13,3 +13,7 @@ variable "private_subnet_cidr" {
 variable "az" {
   type = string
 }
+
+variable "allowed_ip" {
+  type = string
+}
