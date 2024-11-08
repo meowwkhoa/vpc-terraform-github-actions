@@ -58,6 +58,18 @@ resource "aws_default_security_group" "default_security_group" {
   }
 }
 
+module "public" {
+  source = "../Security_Groups"
+  vpc_id = aws_vpc.main_vpc.id
+  allowed_ip = var.allowed_ip
+}
+
+module "private" {
+  source = "../Security_Groups"
+  vpc_id = aws_vpc.main_vpc.id
+  allowed_ip = var.allowed_ip
+}
+
 resource "aws_network_interface" "public" {
   subnet_id = aws_subnet.public_subnet.id
   security_groups = [aws_security_group.public.id]
@@ -69,8 +81,52 @@ resource "aws_network_interface" "private" {
 }
 
 resource "aws_flow_log" "vpc_flow_log" {
-  iam_role_arn = "arn"
-  log_destination = "log"
-  traffic_type = "ALL"
-  vpc_id = aws_vpc.main_vpc.id
+  iam_role_arn    = aws_iam_role.iam_role.arn
+  log_destination = aws_cloudwatch_log_group.vpc_flow_log.arn
+  traffic_type    = "ALL"
+  vpc_id          = aws_vpc.main_vpc.id
+}
+
+resource "aws_cloudwatch_log_group" "vpc_flow_log" {
+  name = "vpc_flow_log"
+}
+
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["vpc-flow-logs.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+resource "aws_iam_role" "iam_role" {
+  name               = "role"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+}
+
+data "aws_iam_policy_document" "policy" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "logs:DescribeLogGroups",
+      "logs:DescribeLogStreams",
+    ]
+
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role_policy" "role_policy" {
+  name   = "role_policy"
+  role   = aws_iam_role.iam_role.name
+  policy = data.aws_iam_policy_document.policy.json
 }
