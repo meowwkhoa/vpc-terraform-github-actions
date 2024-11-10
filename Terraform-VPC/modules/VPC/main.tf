@@ -43,77 +43,33 @@ resource "aws_default_security_group" "default_security_group" {
 
 }
 
-
-resource "aws_s3_bucket" "bucket" {
-  bucket = "group12bucket2252"
+resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
+  name = "group12-vpc-flow-logs"
+  retention_in_days = 30  
 }
 
 
-resource "aws_s3_bucket_acl" "bucket_acl" {
-  bucket = aws_s3_bucket.bucket.id
-  acl    = "private"
+resource "aws_flow_log" "vpc_flow_log" {
+  log_destination_type = "cloud-watch-logs"
+  vpc_id               = aws_vpc.main_vpc.id
+  traffic_type         = "ALL"
+
+  
+  iam_role_arn = aws_iam_role.vpc_flow_log_role.arn
 }
 
 
-resource "aws_s3_bucket" "log_bucket" {
-  bucket = "group12logbucket2252"
-}
+resource "aws_iam_role" "vpc_flow_log_role" {
+  name = "vpcFlowLogRole"
 
-
-resource "aws_s3_bucket_acl" "log_bucket_acl" {
-  bucket = aws_s3_bucket.log_bucket.id
-  acl    = "log-delivery-write"
-}
-
-
-resource "aws_s3_bucket_logging" "bucket_logging" {
-  bucket        = aws_s3_bucket.bucket.id
-  target_bucket = aws_s3_bucket.log_bucket.id
-  target_prefix = "logs/"
-}
-
-
-resource "aws_s3_bucket_public_access_block" "bucket_public_access_block" {
-  bucket                  = aws_s3_bucket.bucket.id
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
-
-
-resource "aws_sns_topic" "sns_topic" {
-  name = "s3-bucket-event-topic"
-}
-
-
-resource "aws_s3_bucket_notification" "bucket_notification" {
-  bucket = aws_s3_bucket.bucket.id
-
-  topic {
-    topic_arn = aws_sns_topic.sns_topic.arn
-    events    = ["s3:ObjectCreated:*"]
-    filter_prefix = "logs/"  
-    filter_suffix = ".txt"   
-  }
-
-  depends_on = [aws_s3_bucket.bucket]
-}
-
-resource "aws_sns_topic_policy" "sns_topic_policy" {
-  arn = aws_sns_topic.sns_topic.arn
-  policy = jsonencode({
+  assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
-        Effect    = "Allow",
-        Principal = { Service = "s3.amazonaws.com" },
-        Action    = "sns:Publish",
-        Resource  = aws_sns_topic.sns_topic.arn,
-        Condition = {
-          ArnLike = {
-            "aws:SourceArn": aws_s3_bucket.bucket.arn
-          }
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "vpc-flow-logs.amazonaws.com"
         }
       }
     ]
@@ -121,9 +77,19 @@ resource "aws_sns_topic_policy" "sns_topic_policy" {
 }
 
 
-resource "aws_flow_log" "vpc_flow_log" {
-  log_destination = aws_s3_bucket.bucket.arn
-  log_destination_type = "s3"
-  traffic_type = "ALL" 
-  vpc_id = aws_vpc.main_vpc.id  
+resource "aws_iam_role_policy" "vpc_flow_log_policy" {
+  role = aws_iam_role.vpc_flow_log_role.id
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Effect   = "Allow",
+        Resource = "${aws_cloudwatch_log_group.vpc_flow_log_group.arn}:*"
+      }
+    ]
+  })
 }
