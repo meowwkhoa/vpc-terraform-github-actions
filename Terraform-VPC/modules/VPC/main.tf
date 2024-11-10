@@ -47,6 +47,27 @@ resource "aws_s3_bucket" "bucket" {
   bucket = "group12bucket"
 }
 
+resource "aws_s3_bucket_acl" "bucket_acl" {
+  bucket = aws_s3_bucket.bucket.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket" "log_bucket" {
+  bucket = "my-tf-log-bucket"
+}
+
+resource "aws_s3_bucket_acl" "log_bucket_acl" {
+  bucket = aws_s3_bucket.log_bucket.id
+  acl    = "log-delivery-write"
+}
+
+resource "aws_s3_bucket_logging" "bucket_logging" {
+  bucket = aws_s3_bucket.bucket.id
+  target_bucket = aws_s3_bucket.log_bucket.id
+  target_prefix = "logs/"
+  
+}
+
 resource "aws_flow_log" "vpc_flow_log" {
   log_destination = aws_s3_bucket.bucket.arn
   log_destination_type = "s3"
