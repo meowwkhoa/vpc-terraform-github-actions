@@ -44,7 +44,7 @@ resource "aws_default_security_group" "default_security_group" {
 }
 
 resource "aws_s3_bucket" "bucket" {
-  bucket = "group12bucket"
+  bucket = "group12bucket2252"
 }
 
 resource "aws_s3_bucket_acl" "bucket_acl" {
