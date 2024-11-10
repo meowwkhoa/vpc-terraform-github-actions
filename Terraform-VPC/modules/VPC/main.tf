@@ -49,11 +49,11 @@ resource "aws_s3_bucket" "bucket" {
 
 resource "aws_s3_bucket_acl" "bucket_acl" {
   bucket = aws_s3_bucket.bucket.id
-  acl    = "private"
+  acl    = "null"
 }
 
 resource "aws_s3_bucket" "log_bucket" {
-  bucket = "my-tf-log-bucket"
+  bucket = "group12logbucket2252"
 }
 
 resource "aws_s3_bucket_acl" "log_bucket_acl" {
