@@ -46,14 +46,6 @@ resource "aws_default_security_group" "default_security_group" {
     self      = true
     from_port = 0
     to_port   = 0
-    cidr_blocks = aws_vpc.main_vpc.cidr_block
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
