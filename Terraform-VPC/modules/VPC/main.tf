@@ -43,16 +43,13 @@ resource "aws_default_security_group" "default_security_group" {
 
 }
 
-module "public" {
-  source = "../Security_Groups"
-  vpc_id = aws_vpc.main_vpc.id
-  allowed_ip = var.allowed_ip
+resource "aws_s3_bucket" "bucket" {
+  bucket = "group12bucket"
 }
 
-module "private" {
-  source = "../Security_Groups"
-  vpc_id = aws_vpc.main_vpc.id
-  allowed_ip = var.allowed_ip
+resource "aws_flow_log" "vpc_flow_log" {
+  log_destination = aws_s3_bucket.bucket.arn
+  log_destination_type = "s3"
+  traffic_type = "ALL" 
+  vpc_id = aws_vpc.main_vpc.id  
 }
-
-
