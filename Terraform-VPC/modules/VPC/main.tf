@@ -43,6 +43,9 @@ resource "aws_default_security_group" "default_security_group" {
 
 }
 
+data "aws_caller_identity" "current" {}
+
+
 resource "aws_kms_key" "log_group_kms_key" {
   description             = "KMS key for encrypting CloudWatch log group"
   deletion_window_in_days = 10
