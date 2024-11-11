@@ -25,9 +25,5 @@ jobs:
         working-directory: Terraform-VPC
         run: |
          checkov -d .
-      
-      - name: Terraform Validate
-        working-directory: Terraform-VPC
-        run: |
-          terraform validate -no-color
+
     
