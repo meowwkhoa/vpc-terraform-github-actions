@@ -1,47 +1,47 @@
-name: Terraform Deploy
+# name: Terraform Deploy
 
-on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - closed
+# on:
+#   pull_request:
+#     branches:
+#       - main
+#     types:
+#       - closed
 
-jobs:
-  terraform:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-22.04
-    environment: aws
+# jobs:
+#   terraform:
+#     if: github.event.pull_request.merged == true
+#     runs-on: ubuntu-22.04
+#     environment: aws
     
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
+#     - name: Configure AWS credentials
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: ${{ secrets.AWS_REGION }}
         
 
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_version: 1.0.0
+#     - name: Set up Terraform
+#       uses: hashicorp/setup-terraform@v1
+#       with:
+#         terraform_version: 1.0.0
 
-    - name: Initialize Terraform
-      working-directory: Terraform-VPC
-      run: terraform init
+#     - name: Initialize Terraform
+#       working-directory: Terraform-VPC
+#       run: terraform init
 
-    - name: Plan Terraform changes
-      working-directory: Terraform-VPC
-      run: terraform plan -out=tfplan
+#     - name: Plan Terraform changes
+#       working-directory: Terraform-VPC
+#       run: terraform plan -out=tfplan
 
-    - name: Apply Terraform changes
-      working-directory: Terraform-VPC
-      run: terraform apply --auto-approve
+#     - name: Apply Terraform changes
+#       working-directory: Terraform-VPC
+#       run: terraform apply --auto-approve
 
-    - name: Clean up
-      working-directory: Terraform-VPC
-      run: rm tfplan
+#     - name: Clean up
+#       working-directory: Terraform-VPC
+#       run: rm tfplan
