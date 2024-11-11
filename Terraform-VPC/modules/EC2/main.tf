@@ -16,21 +16,20 @@ resource "aws_iam_role" "ec2_role" {
 
 resource "aws_iam_role_policy" "ec2_role_policy" {
   role   = aws_iam_role.ec2_role.id
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action   = "s3:*"
-        Effect   = "Allow"
-        Resource = "*"
-      },
-      {
-        Action   = "logs:*"
-        Effect   = "Allow"
-        Resource = "*"
-      }
-    ]
-  })
+  policy = jsonencode(
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": [
+            "s3:ListBucket"
+          ],
+          "Effect": "Allow",
+          "Resource": "arn:aws:s3:::my_bucket"
+        }
+      ]
+    }
+  )
 }
 
 
@@ -40,7 +39,7 @@ resource "aws_instance" "public" {
   ami               = var.ami
   instance_type     = var.instance_type
   subnet_id         = var.public_subnet_id
-  security_groups   = [aws_security_group.public.id]
+  security_groups   = [var.public_security_group]
   ebs_optimized     = true
   monitoring        = true
   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name 
