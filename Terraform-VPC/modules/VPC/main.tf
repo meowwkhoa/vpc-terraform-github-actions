@@ -53,7 +53,9 @@ resource "aws_kms_alias" "log_group_kms_alias" {
   target_key_id = aws_kms_key.log_group_kms_key.id
 }
 
-
+resource "aws_kms_key_rotation" "log_group_kms_key_rotation" {
+  key_id = aws_kms_key.log_group_kms_key.id
+}
 
 resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
   name = "group12-vpc-flow-logs"
