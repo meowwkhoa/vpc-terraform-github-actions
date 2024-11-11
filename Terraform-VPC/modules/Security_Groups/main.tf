@@ -23,6 +23,11 @@ resource "aws_security_group" "public" {
   }
 }
 
+resource "aws_network_interface" "public" {
+  subnet_id   = var.public_subnet_id
+  security_groups = [aws_security_group.public.id]
+}
+
 resource "aws_security_group" "private" {
   vpc_id = var.vpc_id
   description = "Private security group allowing SSH access from the public security group and unrestricted outbound traffic"
@@ -46,4 +51,10 @@ resource "aws_security_group" "private" {
   tags = {
     Name = "Group 12: Private Security Group"
   }
+}
+
+resource "aws_network_interface" "private" {
+  subnet_id   = var.private_subnet_id
+  security_groups = [aws_security_group.private.id]
+  
 }

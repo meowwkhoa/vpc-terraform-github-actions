@@ -1,8 +1,10 @@
+
+
 resource "aws_instance" "public" {
   ami = var.ami
   instance_type = var.instance_type
   subnet_id = var.public_subnet_id
-  security_groups = [var.public_security_group]
+  security_groups = [aws_security_group.public.id]
   ebs_optimized = true
   monitoring = true
 
