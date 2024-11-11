@@ -44,10 +44,38 @@ resource "aws_default_security_group" "default_security_group" {
 }
 
 resource "aws_kms_key" "log_group_kms_key" {
-  description = "KMS key for encrypting CloudWatch log group"
+  description             = "KMS key for encrypting CloudWatch log group"
   deletion_window_in_days = 10
-  enable_key_rotation = true
+  enable_key_rotation     = true
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        },
+        Action = "kms:*",
+        Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "cloudwatch.amazonaws.com"
+        },
+        Action = [
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:GenerateDataKey*",
+          "kms:DescribeKey"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
 }
+
 
 resource "aws_kms_alias" "log_group_kms_alias" {
   name          = "alias/log-group-kms-key"
