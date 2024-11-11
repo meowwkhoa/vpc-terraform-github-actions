@@ -45,12 +45,13 @@ resource "aws_default_security_group" "default_security_group" {
 
 resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
   name = "group12-vpc-flow-logs"
-  retention_in_days = 30  
+  retention_in_days = 365 
 }
 
 
 resource "aws_flow_log" "vpc_flow_log" {
   log_destination_type = "cloud-watch-logs"
+  log_group_name       = aws_cloudwatch_log_group.vpc_flow_log_group.name
   vpc_id               = aws_vpc.main_vpc.id
   traffic_type         = "ALL"
 
