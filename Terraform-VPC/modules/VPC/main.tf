@@ -46,6 +46,7 @@ resource "aws_default_security_group" "default_security_group" {
 resource "aws_kms_key" "log_group_kms_key" {
   description = "KMS key for encrypting CloudWatch log group"
   deletion_window_in_days = 10
+  enable_key_rotation = true
 }
 
 resource "aws_kms_alias" "log_group_kms_alias" {
@@ -53,9 +54,7 @@ resource "aws_kms_alias" "log_group_kms_alias" {
   target_key_id = aws_kms_key.log_group_kms_key.id
 }
 
-resource "aws_kms_key_rotation" "log_group_kms_key_rotation" {
-  key_id = aws_kms_key.log_group_kms_key.id
-}
+
 
 resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
   name = "group12-vpc-flow-logs"
