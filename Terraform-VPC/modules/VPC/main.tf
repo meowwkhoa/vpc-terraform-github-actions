@@ -81,22 +81,24 @@ resource "aws_kms_key" "log_group_kms_key" {
 
 
 resource "aws_kms_alias" "log_group_kms_alias" {
-  name          = "alias/log-group-kms-key"
+  name          = "alias/log-group-kms-key1"
   target_key_id = aws_kms_key.log_group_kms_key.id
 }
 
 
 
 resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
-  name = "group12-vpc-flow-logs"
+  name = "group12-vpc-flow-logs1"
   retention_in_days = 365 
   kms_key_id = aws_kms_key.log_group_kms_key.id
+
+  depends_on = [aws_kms_key.log_group_kms_key]
 }
 
 
 resource "aws_flow_log" "vpc_flow_log" {
   log_destination_type = "cloud-watch-logs"
-  log_group_name       = aws_cloudwatch_log_group.vpc_flow_log_group.name
+  log_destination      = aws_cloudwatch_log_group.vpc_flow_log_group.arn
   vpc_id               = aws_vpc.main_vpc.id
   traffic_type         = "ALL"
 
@@ -106,7 +108,7 @@ resource "aws_flow_log" "vpc_flow_log" {
 
 
 resource "aws_iam_role" "vpc_flow_log_role" {
-  name = "vpcFlowLogRole"
+  name = "vpcFlowLogRole1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
