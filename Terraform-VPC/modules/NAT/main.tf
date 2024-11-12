@@ -1,5 +1,9 @@
 resource "aws_eip" "nat_eip" {
   domain = "vpc"
+
+  tags = {
+    Name = "NAT EIP group 12"
+  }
 }
 
 resource "aws_nat_gateway" "nat_gateway" {
