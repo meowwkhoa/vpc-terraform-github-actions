@@ -97,7 +97,7 @@ resource "aws_cloudwatch_log_group" "vpc_flow_log_group5" {
 
 
 resource "aws_flow_log" "vpc_flow_log2" {
-  log_destination_type = "cloud-watch-logs3"
+  log_destination_type = "cloud-watch-logs"
   log_destination      = aws_cloudwatch_log_group.vpc_flow_log_group5.arn
   vpc_id               = aws_vpc.main_vpc.id
   traffic_type         = "ALL"
