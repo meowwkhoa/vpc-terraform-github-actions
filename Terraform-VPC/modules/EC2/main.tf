@@ -14,8 +14,8 @@ resource "aws_iam_role" "ec2_role1" {
   })
 }
 
-resource "aws_iam_role_policy" "ec2_role_policy" {
-  role   = aws_iam_role.ec2_role.id
+resource "aws_iam_role_policy" "ec2_role_policy1" {
+  role   = aws_iam_role.ec2_role1.id
   policy = jsonencode(
     {
       "Version": "2012-10-17",
@@ -59,7 +59,7 @@ resource "aws_instance" "public" {
 
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
   name = "ec2_instance_profile"
-  role = aws_iam_role.ec2_role.name
+  role = aws_iam_role.ec2_role1.name
 }
 
 

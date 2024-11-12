@@ -46,7 +46,7 @@ resource "aws_default_security_group" "default_security_group" {
 data "aws_caller_identity" "current" {}
 
 
-resource "aws_kms_key" "log_group_kms_key" {
+resource "aws_kms_key" "log_group_kms_key1" {
   description             = "KMS key for encrypting CloudWatch log group"
   deletion_window_in_days = 10
   enable_key_rotation     = true
@@ -81,24 +81,24 @@ resource "aws_kms_key" "log_group_kms_key" {
 
 
 resource "aws_kms_alias" "log_group_kms_alias1" {
-  name          = "alias/log-group-kms-key2"
-  target_key_id = aws_kms_key.log_group_kms_key.id
+  name          = "alias/log-group-kms-key22"
+  target_key_id = aws_kms_key.log_group_kms_key1.id
 }
 
 
 
-resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
-  name = "group12-vpc-flow-logs1"
+resource "aws_cloudwatch_log_group" "vpc_flow_log_group5" {
+  name = "group12-vpc-flow-logs5"
   retention_in_days = 365 
-  kms_key_id = aws_kms_key.log_group_kms_key.id
+  kms_key_id = aws_kms_key.log_group_kms_key1.id
 
   depends_on = [aws_kms_key.log_group_kms_key]
 }
 
 
-resource "aws_flow_log" "vpc_flow_log1" {
-  log_destination_type = "cloud-watch-logs"
-  log_destination      = aws_cloudwatch_log_group.vpc_flow_log_group.arn
+resource "aws_flow_log" "vpc_flow_log2" {
+  log_destination_type = "cloud-watch-logs3"
+  log_destination      = aws_cloudwatch_log_group.vpc_flow_log_group5.arn
   vpc_id               = aws_vpc.main_vpc.id
   traffic_type         = "ALL"
 
@@ -107,8 +107,8 @@ resource "aws_flow_log" "vpc_flow_log1" {
 }
 
 
-resource "aws_iam_role" "vpc_flow_log_role2" {
-  name = "vpcFlowLogRole2"
+resource "aws_iam_role" "vpc_flow_log_role" {
+  name = "vpcFlowLogRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
