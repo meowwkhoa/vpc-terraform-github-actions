@@ -92,7 +92,7 @@ resource "aws_cloudwatch_log_group" "vpc_flow_log_group5" {
   retention_in_days = 365 
   kms_key_id = aws_kms_key.log_group_kms_key1.id
 
-  depends_on = [aws_kms_key.log_group_kms_key]
+  depends_on = [aws_kms_key.log_group_kms_key1]
 }
 
 
@@ -136,7 +136,7 @@ resource "aws_iam_role_policy" "vpc_flow_log_policy" {
           "logs:PutLogEvents"
         ],
         Effect   = "Allow",
-        Resource = "${aws_cloudwatch_log_group.vpc_flow_log_group.arn}:*"
+        Resource = "${aws_cloudwatch_log_group.vpc_flow_log_group5.arn}:*"
       }
     ]
   })
