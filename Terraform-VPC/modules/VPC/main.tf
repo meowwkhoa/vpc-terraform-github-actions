@@ -96,7 +96,7 @@ resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
 }
 
 
-resource "aws_flow_log" "vpc_flow_log2" {
+resource "aws_flow_log" "vpc_flow_log" {
   log_destination_type = "cloud-watch-logs"
   log_destination      = aws_cloudwatch_log_group.vpc_flow_log_group.arn
   vpc_id               = aws_vpc.main_vpc.id
@@ -136,7 +136,7 @@ resource "aws_iam_role_policy" "vpc_flow_log_policy" {
           "logs:PutLogEvents"
         ],
         Effect   = "Allow",
-        Resource = "${aws_cloudwatch_log_group.vpc_flow_log_group5.arn}:*"
+        Resource = "${aws_cloudwatch_log_group.vpc_flow_log_group.arn}:*"
       }
     ]
   })
