@@ -71,7 +71,7 @@ resource "aws_kms_key" "log_group_kms_key" {
           "kms:GenerateDataKey*",
           "kms:DescribeKey"
         ],
-        Resource = "*"
+        Resource = "${aws_kms_key.log_group_kms_key.arn}"
       }
     ]
   })
@@ -88,7 +88,7 @@ resource "aws_kms_alias" "log_group_kms_alias" {
 resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
   name = "group12-vpc-flow-logs"
   retention_in_days = 365 
-  kms_key_id = aws_kms_key.log_group_kms_key.id
+  kms_key_id = aws_kms_key.log_group_kms_key.arn
 
   depends_on = [aws_kms_key.log_group_kms_key]
 }
