@@ -26,18 +26,18 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
         
 
-    # - name: Set up Terraform
-    #   uses: hashicorp/setup-terraform@v1
-    #   with:
-    #     terraform_version: 1.0.0
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0
 
-    # - name: Initialize Terraform
-    #   working-directory: Terraform-VPC
-    #   run: terraform init
+    - name: Initialize Terraform
+      working-directory: Terraform-VPC
+      run: terraform init
 
-    # - name: Plan Terraform changes
-    #   working-directory: Terraform-VPC
-    #   run: terraform plan -out=tfplan
+    - name: Plan Terraform changes
+      working-directory: Terraform-VPC
+      run: terraform plan -out=tfplan
 
     - name: Apply Terraform changes
       working-directory: Terraform-VPC
