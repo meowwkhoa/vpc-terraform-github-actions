@@ -71,7 +71,7 @@ resource "aws_kms_key" "log_group_kms_key" {
           "kms:GenerateDataKey*",
           "kms:DescribeKey"
         ],
-        Resource = "${aws_kms_key.log_group_kms_key.arn}"
+        Resource = "*"
       }
     ]
   })
