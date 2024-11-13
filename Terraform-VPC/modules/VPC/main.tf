@@ -44,7 +44,7 @@ resource "aws_default_security_group" "default_security_group" {
 data "aws_caller_identity" "current" {}
 
 
-resource "aws_kms_key" "log_group_kms_key" {
+resource "aws_kms_key" "log_group_kms_key12" {
   description             = "KMS key for encrypting CloudWatch log group"
   deletion_window_in_days = 10
   enable_key_rotation     = true
@@ -63,8 +63,7 @@ resource "aws_kms_key" "log_group_kms_key" {
       {
         Effect = "Allow",
         Principal = {
-          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
-          # Service = "logs.${var.region}.amazonaws.com"
+          Service = "logs.${var.region}.amazonaws.com"
         },
         Action = [
           "kms:Encrypt",
@@ -79,35 +78,35 @@ resource "aws_kms_key" "log_group_kms_key" {
 }
 
 
-resource "aws_kms_alias" "log_group_kms_alias" {
-  name          = "alias/log-group-kms-key"
-  target_key_id = aws_kms_key.log_group_kms_key.id
+resource "aws_kms_alias" "log_group_kms_alias12" {
+  name          = "alias/log-group-kms-key12"
+  target_key_id = aws_kms_key.log_group_kms_key12.id
 }
 
 
 
-resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
-  name = "group12-vpc-flow-logs"
+resource "aws_cloudwatch_log_group" "vpc_flow_log_group12" {
+  name = "group12-vpc-flow-logs12"
   retention_in_days = 365 
-  kms_key_id = aws_kms_key.log_group_kms_key.arn
+  kms_key_id = aws_kms_key.log_group_kms_key12.arn
 
-  depends_on = [aws_kms_key.log_group_kms_key]
+  depends_on = [aws_kms_key.log_group_kms_key12]
 }
 
 
-resource "aws_flow_log" "vpc_flow_log" {
+resource "aws_flow_log" "vpc_flow_log12" {
   log_destination_type = "cloud-watch-logs"
-  log_destination      = aws_cloudwatch_log_group.vpc_flow_log_group.arn
+  log_destination      = aws_cloudwatch_log_group.vpc_flow_log_group12.arn
   vpc_id               = aws_vpc.main_vpc.id
   traffic_type         = "ALL"
 
   
-  iam_role_arn = aws_iam_role.vpc_flow_log_role.arn
+  iam_role_arn = aws_iam_role.vpc_flow_log_role12.arn
 }
 
 
-resource "aws_iam_role" "vpc_flow_log_role" {
-  name = "vpcFlowLogRole"
+resource "aws_iam_role" "vpc_flow_log_role12" {
+  name = "vpcFlowLogRole12"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -124,8 +123,8 @@ resource "aws_iam_role" "vpc_flow_log_role" {
 }
 
 
-resource "aws_iam_role_policy" "vpc_flow_log_policy" {
-  role = aws_iam_role.vpc_flow_log_role.id
+resource "aws_iam_role_policy" "vpc_flow_log_policy12" {
+  role = aws_iam_role.vpc_flow_log_role12.id
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -135,7 +134,7 @@ resource "aws_iam_role_policy" "vpc_flow_log_policy" {
           "logs:PutLogEvents"
         ],
         Effect   = "Allow",
-        Resource = "${aws_cloudwatch_log_group.vpc_flow_log_group.arn}:*"
+        Resource = "${aws_cloudwatch_log_group.vpc_flow_log_group12.arn}:*"
       }
     ]
   })
