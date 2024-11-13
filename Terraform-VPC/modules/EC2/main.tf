@@ -1,5 +1,5 @@
-resource "aws_iam_role" "ec2_role" {
-  name               = "ec2_role"
+resource "aws_iam_role" "ec2_role12" {
+  name               = "ec2_role12"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -14,8 +14,8 @@ resource "aws_iam_role" "ec2_role" {
   })
 }
 
-resource "aws_iam_role_policy" "ec2_role_policy1" {
-  role   = aws_iam_role.ec2_role.id
+resource "aws_iam_role_policy" "ec2_role_policy12" {
+  role   = aws_iam_role.ec2_role12.id
   policy = jsonencode(
     {
       "Version": "2012-10-17",
@@ -42,7 +42,7 @@ resource "aws_instance" "public" {
   security_groups   = [var.public_security_group]
   ebs_optimized     = true
   monitoring        = true
-  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name 
+  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile12.name 
 
   root_block_device {
     encrypted = true
@@ -57,9 +57,9 @@ resource "aws_instance" "public" {
   }
 }
 
-resource "aws_iam_instance_profile" "ec2_instance_profile" {
-  name = "ec2_instance_profile"
-  role = aws_iam_role.ec2_role.name
+resource "aws_iam_instance_profile" "ec2_instance_profile12" {
+  name = "ec2_instance_profile12"
+  role = aws_iam_role.ec2_role12.name
 }
 
 
@@ -71,7 +71,7 @@ resource "aws_instance" "private" {
   security_groups = [var.private_security_group]
   ebs_optimized = true
   monitoring = true
-  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
+  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile12.name
 
   root_block_device {
     encrypted = true
