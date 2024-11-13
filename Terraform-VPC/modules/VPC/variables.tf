@@ -17,3 +17,7 @@ variable "az" {
 variable "allowed_ip" {
   type = string
 }
+
+variable "region" {
+  type = string
+}

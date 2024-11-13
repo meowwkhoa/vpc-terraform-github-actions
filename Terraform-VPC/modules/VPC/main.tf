@@ -63,7 +63,7 @@ resource "aws_kms_key" "log_group_kms_key" {
       {
         Effect = "Allow",
         Principal = {
-          Service = "cloudwatch.amazonaws.com"
+          Service = "logs.${var.region}.amazonaws.com"
         },
         Action = [
           "kms:Encrypt",

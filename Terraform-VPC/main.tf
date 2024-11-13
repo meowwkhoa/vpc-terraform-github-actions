@@ -9,6 +9,7 @@ module "vpc" {
   private_subnet_cidr     = var.private_subnet_cidr
   az                      = var.az 
   allowed_ip              = var.allowed_ip
+  region                  = var.region
 }
 
 module "nat" {
