@@ -63,7 +63,8 @@ resource "aws_kms_key" "log_group_kms_key" {
       {
         Effect = "Allow",
         Principal = {
-          Service = "logs.${var.region}.amazonaws.com"
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+          # Service = "logs.${var.region}.amazonaws.com"
         },
         Action = [
           "kms:Encrypt",
