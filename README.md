@@ -141,3 +141,8 @@ vpc-terraform-github-actions
 
    - Public Security Group `Group 12: Public Security Group` and Private Security Group `Group 12: Private Security Group`.
    ![SG](assets/Security_Group.png)
+
+6. **Running a security scan with Checkov**
+   - The Github Action will trigger automatically.
+   - Logs of the scanning process.
+   ![Checkov](assets/Checkov.png)
