@@ -13,7 +13,7 @@
 
 
 ## Introduction:
-Creating a VPC using Terraform as IAAC and GitHub Actions as CI/CD for the NT548.P11 course - Fall 2024 semester at University of Information Technology - VNUHCM.
+Creating a VPC using Terraform as IAC and GitHub Actions as CI/CD for the NT548.P11 course - Fall 2024 semester at University of Information Technology - VNUHCM.
 
 
 ## Repository structure:
